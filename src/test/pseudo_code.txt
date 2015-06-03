@@ -1,0 +1,41 @@
+super "89%/{289+[]-()}+890)+20" ... return "Error"
+->
+   super "289+[]-()}+890)+20" ... return ")+20"
+   ->
+       super "]-()}+890)" ...return "-()}+890)" 
+       super ")}+890)" ...return "}+890)"
+
+super "89+{289+[(8+8)-2]}+890"
+     super "289+[(8+8)-2]}+890"
+	     super "(8+8)-2]}+890"
+		super "8+8)-2]}+890"
+	     continue with "-2]}+890"
+     continue with "}+890"
+continue with "+890"
+
+
+public string[] super (String expression) {
+   int i = 0;
+   while(i < expression.length()) {
+	if (expression.charAt(i) in arrayOfOpenBrackets[]) {
+		result = super(expression.substr(everything after open bracket));
+		i = expression.length() - result.length();
+		
+	}
+	if (expression.charAt(i) in arrayOfCloseBrackets[]) {
+	   return expression.substr(everything after this closeBracket);
+	}
+	i++;
+   }
+
+}
+
+   for (int i = 0; i < expression.length(); i++)
+
+int i = 0;
+while (i < 15) {
+sysout(i);
+i++;
+}
+
+	

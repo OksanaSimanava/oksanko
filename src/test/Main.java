@@ -38,31 +38,51 @@ public class Main {
 				}
 			}
 		}
+		/*
+		 * if error return -1 if no error return None
+		 */
+		// for(int i = expression.length(); i > 0; i--)
+		// {
+		// if(expression.charAt(0))
+		//
+		// expression = expression.substring(1);
+		// }
 
-		Deque<Integer> stack = new ArrayDeque<Integer>();
-		arrBrackets = new char[][] { { '(', '[', '{' }, { ')', ']', '}' } };
+//		for (int i = 0; i < 15; i++) {
+//			System.out.println(i);
+//		}
 
-		for (char element : expression.toCharArray()) {
-
-			if (Arrays.binarySearch(arrBrackets[0], element) >= 0) {
-				stack.push(Arrays.binarySearch(arrBrackets[0], element));
-
-			}
-			if (Arrays.binarySearch(arrBrackets[1], element) >= 0) {
-				if (stack.size() == 0
-						|| Arrays.binarySearch(arrBrackets[1], element) != stack
-								.pop()) {
-					System.out.println("Position of brackets is wrong");
-					return;
-				}
-			}
-
-		}
-		if (stack.size() > 0) {
-			System.out.println("Position of brackets is wrong");
-		} else {
-			System.out.println("Brackets are right");
+		int i = 0;  //jump from 3 to 7
+		while (i < 15) {
+			System.out.println(i);
+			if(i == 3) i = 6;
+			i++;
 		}
 
 	}
 }
+// Deque<Integer> stack = new ArrayDeque<Integer>();
+// arrBrackets = new char[][] { { '(', '[', '{' }, { ')', ']', '}' } };
+//
+// for (char element : expression.toCharArray()) {
+//
+// if (Arrays.binarySearch(arrBrackets[0], element) >= 0) {
+// stack.push(Arrays.binarySearch(arrBrackets[0], element));
+//
+// }
+// if (Arrays.binarySearch(arrBrackets[1], element) >= 0) {
+// if (stack.size() == 0
+// || Arrays.binarySearch(arrBrackets[1], element) != stack
+// .pop()) {
+// System.out.println("Position of brackets is wrong");
+// return;
+// }
+// }
+//
+// }
+// if (stack.size() > 0) {
+// System.out.println("Position of brackets is wrong");
+// } else {
+// System.out.println("Brackets are right");
+// }
+
