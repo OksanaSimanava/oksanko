@@ -11,7 +11,7 @@ public class Main {
 		if (args.length > 0) {
 			expression = args[0];
 		} else {
-			expression = "4(97*[89+ 35+ 1+( ])+(8+6))";
+			expression = "4(97*[89+ 35+ 1+( ])";
 		}
 
 		expression = expression.replaceAll(" ", "");
