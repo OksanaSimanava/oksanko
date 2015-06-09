@@ -1,19 +1,17 @@
 package test;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 
-@SuppressWarnings("unused")
 public class Main {
 	public static void main(String[] args) {
-
 		String expression;
-		if (args.length > 0) {
+		if (args.length > 0)
 			expression = args[0];
-		} else {
-			expression = "4(97*[89+ 35+ 1+( ])";
-		}
+		else
+			expression = "4(97*[89+ 35+ 1+( ])+{8+6})";
 
 		expression = expression.replaceAll(" ", "");
 
@@ -39,51 +37,54 @@ public class Main {
 				}
 			}
 		}
-		/*
-		 * if error return -1 if no error return None
-		 */
-		// for(int i = expression.length(); i > 0; i--)
+		arrBrackets = new char[][] { { '(', '[', '{' }, { ')', ']', '}' } };
+		// Deque<Integer> stack = new ArrayDeque<Integer>();
+		// for (char element : expression.toCharArray())
 		// {
-		// if(expression.charAt(0))
-		//
-		// expression = expression.substring(1);
+		// if (Arrays.binarySearch(arrBrackets[0], element) >= 0)
+		// {
+		// stack.push(Arrays.binarySearch(arrBrackets[0], element));
 		// }
+		// if (Arrays.binarySearch(arrBrackets[1], element) >= 0)
+		// {
+		// if (stack.size() == 0
+		// || Arrays.binarySearch(arrBrackets[1], element) != stack.pop())
+		// {
+		// System.out.println("Position of brackets is wrong");
+		// return;
+		// }
+		// }
+		// }
+		// if (stack.size() > 0)
+		// System.out.println("Position of brackets is wrong");
+		// else
+		// System.out.println("Brackets are right");
 
-//		for (int i = 0; i < 15; i++) {
-//			System.out.println(i);
-//		}
+		// String s =
+		recursion(expression);
+	}
 
-		int i = 0;  //jump from 3 to 7
-		while (i < 15) {
-			System.out.println(i);
-			if(i == 3) i = 6;
-			i++;
+	public static void recursion(String expression) {
+		String StrarrBrackets[][] = { { "(", ")" }, { "[", "]" }, { "{", "}" } };
+		char arrBrackets[][] = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
+		for (int j = 0; j < arrBrackets.length; j++) {
+			char charBracketOpen = arrBrackets[j][0];
+			for (int i = expression.length(); i > 0; i--) {
+				// System.out.println(expression);
+
+				if (expression.indexOf(charBracketOpen) != 0)// if expression
+																// begin not
+																// from
+																// openBracket
+				{
+					System.out.println(expression);
+					expression = expression.substring(1);
+				} else {
+					System.out.println(expression + "Starts from open bracket");
+					recursion(expression.substring(1));
+				}
+
+			}
 		}
-
 	}
 }
-// Deque<Integer> stack = new ArrayDeque<Integer>();
-// arrBrackets = new char[][] { { '(', '[', '{' }, { ')', ']', '}' } };
-//
-// for (char element : expression.toCharArray()) {
-//
-// if (Arrays.binarySearch(arrBrackets[0], element) >= 0) {
-// stack.push(Arrays.binarySearch(arrBrackets[0], element));
-//
-// }
-// if (Arrays.binarySearch(arrBrackets[1], element) >= 0) {
-// if (stack.size() == 0
-// || Arrays.binarySearch(arrBrackets[1], element) != stack
-// .pop()) {
-// System.out.println("Position of brackets is wrong");
-// return;
-// }
-// }
-//
-// }
-// if (stack.size() > 0) {
-// System.out.println("Position of brackets is wrong");
-// } else {
-// System.out.println("Brackets are right");
-// }
-
