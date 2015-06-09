@@ -60,22 +60,55 @@ public class Main {
 		// else
 		// System.out.println("Brackets are right");
 
-		// String s =
-		recursion(expression);
+	//	String s = recursion(expression);
+		if (rec(expression)[0] == 0){
+			System.out.println("Expression is good!");
+		} else {
+			System.out.println("Expression is bad!");
+		}
+		
+
 	}
 
-	public static void recursion(String expression) {
-		String StrarrBrackets[][] = { { "(", ")" }, { "[", "]" }, { "{", "}" } };
-		char arrBrackets[][] = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
-		for (int j = 0; j < arrBrackets.length; j++) {
-			char charBracketOpen = arrBrackets[j][0];
+	
+	public static int[] rec(String expression)
+	{
+		System.out.println(expression);
+		int i = 0;
+
+		while(i < expression.length())
+		{
+			if(i != 0 && Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
+				int result[] = rec(expression.substring(i));
+				if (result[0] == -1)
+					return new int[] {-1, i};
+				else 
+					i += result[1];
+			}
+			
+			if(Arrays.asList(')', ']', '}').contains(expression.charAt(i))) {
+				if (true) {
+					System.out.println("Found close on " + i);
+					return new int[] {0, i};
+				}
+				else 
+					return new int[] {-1, i};
+			}
+			i++;
+		}
+		return new int[]  {0};
+	}
+	
+	public static String recursion(String expression) {
+		
+		char brackets[][] = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
+		for (int j = 0; j < brackets.length; j++) {
+			char charBracketOpen = brackets[j][0];
+			System.out.println(charBracketOpen);
 			for (int i = expression.length(); i > 0; i--) {
 				// System.out.println(expression);
 
-				if (expression.indexOf(charBracketOpen) != 0)// if expression
-																// begin not
-																// from
-																// openBracket
+				if (expression.indexOf(charBracketOpen) != 0)// if expression begin not from openBracket
 				{
 					System.out.println(expression);
 					expression = expression.substring(1);
@@ -86,5 +119,6 @@ public class Main {
 
 			}
 		}
+		return expression;
 	}
 }
