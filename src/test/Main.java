@@ -3,7 +3,7 @@ package test;
 import java.util.Arrays;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Hashtable;
+//import java.util.Hashtable;
 
 public class Main {
 	// public static boolean firstItteration = true;
