@@ -16,7 +16,7 @@ public class Main {
 			expression = "4+(97*[89+( )]+{8+6})";
 
 		expression = expression.replaceAll(" ", "");
-
+		System.out.println(expression);
 		String wrongOpenSymbols[] = new String[] { "/", "*" };
 		String wrongCloseSymbols[] = new String[] { "+", "-", "/", "*" };
 		for (String x : wrongOpenSymbols) {
@@ -78,51 +78,55 @@ public class Main {
 	}
 
 	public static boolean bracketsViaRec(String expression) {
-		System.out.println(expression);
-		return (bracketsViaRecIn(expression)[0] == 0);
+
+		return (bracketsViaRecIn(expression)[0] == expression.length());
 	}
 
 	public static int[] bracketsViaRecIn(String expression) {
-		int i=0;
-		char[] openBrackets = {'(', '[', '{'};
-		
+		int i = 0;
+		char[] openBrackets = { '(', '[', '{' };
+
 		while (i < expression.length()) {
 			if (Arrays.asList(')', ']', '}').contains(expression.charAt(i))) {
-				return new int[] {i, Arrays.asList(')', ']', '}').indexOf(expression.charAt(i)) };
+				return new int[] {
+						i,
+						Arrays.asList(')', ']', '}').indexOf(
+								expression.charAt(i)) };
 			}
-			
+
 			if (Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
-				int result[] = bracketsViaRecIn(expression.substring(i+1));
-					if (result[0] == -1) {
-						return new int[] {-1, 0};
-					} else {
-						if (openBrackets[result[1]] == expression.charAt(i))
-							i += result[0] + 1;
-						else 
-							return new int[] {-1, 0};
-					}
+				int result[] = bracketsViaRecIn(expression.substring(i + 1));
+				if (result[0] == -1 || result[1] == -1) {
+					return new int[] { -1, 0 };
+				} else {
+					if (openBrackets[result[1]] == expression.charAt(i))
+						i += result[0] + 1;
+					else
+						return new int[] { -1, 0 };
+				}
 			}
-			
+
 			i++;
 		}
-		
-		return new int[] { 0, 0 };
+
+		return new int[] { expression.length(), -1 };
 	}
 
-//	public static Boolean compareBrackets(char openBracket, char closeBracket) {
-//		Hashtable<String, String> brackets = new Hashtable<String, String>() {
-//			{
-//				put("(", ")");
-//				put("[", "]");
-//				put("{", "}");
-//			}
-//		};
-//
-//		if (brackets.keySet().contains(String.valueOf(openBracket)))
-//			return (brackets.get(String.valueOf(openBracket)).equals(String
-//					.valueOf(closeBracket)));
-//		else
-//			return false;
-//
-//	}
+	// public static Boolean compareBrackets(char openBracket, char
+	// closeBracket) {
+	// Hashtable<String, String> brackets = new Hashtable<String, String>() {
+	// {
+	// put("(", ")");
+	// put("[", "]");
+	// put("{", "}");
+	// }
+	// };
+	//
+	// if (brackets.keySet().contains(String.valueOf(openBracket)))
+	// return (brackets.get(String.valueOf(openBracket)).equals(String
+	// .valueOf(closeBracket)));
+	// else
+	// return false;
+	//
+	// }
 }
