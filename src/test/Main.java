@@ -17,20 +17,26 @@ public class Main {
 
 		expression = expression.replaceAll(" ", "");
 
-		// FIXME could start with - +
-		String arrSymbols[] = new String[] { "+", "-", "/", "*" };
-		for (String x : arrSymbols) {
-			if (expression.startsWith(x) || expression.endsWith(x)) {
-				System.out
-						.println("Expression starts with or ends with an irregular symbol");
+		String wrongOpenSymbols[] = new String[] { "/", "*" };
+		String wrongCloseSymbols[] = new String[] { "+", "-", "/", "*" };
+		for (String x : wrongOpenSymbols) {
+			if (expression.startsWith(x)) {
+				System.out.println("Expression starts with an irregular symbol");
 				return;
 			}
 		}
+		for (String x : wrongCloseSymbols) {
+			if (expression.endsWith(x)) {
+				System.out.println("Expression ends with an irregular symbol");
+				return;
+			}
+		}
+		
 
 		char[][] arrBrackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
 
 		// математические знаки после открывающей скобки
-		for (String symbol : arrSymbols) {
+		for (String symbol : wrongCloseSymbols  ) {
 			for (char[] brackets : arrBrackets) {
 				if (expression.contains(brackets[0] + symbol)
 						|| expression.contains(symbol + brackets[1])) {
@@ -80,15 +86,11 @@ public class Main {
 		// FIXME : one open at at the beginning - shows OK
 
 		int i;
-		if (firstItteration)
-			i = 0;
-		else
-			i = 1;
-
+		i = (firstItteration) ? 0 : 1;
 		System.out.println(expression);
 
 		while (i < expression.length()) {
-			if (// i != 0 &&
+			if ( !(firstItteration && i==0) &&
 			Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
 				int result[] = bracketsViaRecIn(expression.substring(i), false);
 				if (result[0] == -1)
@@ -108,7 +110,7 @@ public class Main {
 			}
 			i++;
 		}
-		return new int[] { 0, expression.length()-1 };
+		return new int[] { 0, expression.length() - 1 };
 	}
 
 	public static Boolean compareBrackets(char openBracket, char closeBracket) {
@@ -121,8 +123,9 @@ public class Main {
 		};
 
 		if (brackets.keySet().contains(String.valueOf(openBracket)))
-			return (brackets.get(String.valueOf(openBracket)).equals(String.valueOf(closeBracket)));
-		else 
+			return (brackets.get(String.valueOf(openBracket)).equals(String
+					.valueOf(closeBracket)));
+		else
 			return false;
 
 	}
