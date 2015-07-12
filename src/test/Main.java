@@ -13,7 +13,7 @@ public class Main {
 		if (args.length > 0)
 			expression = args[0];
 		else
-			expression = " (4+(97*[89+ 35+ 1+( )]+{8+6})";
+			expression = " [4+(97*[89+ 35+ 1+( )]+{8+6})";
 
 		expression = expression.replaceAll(" ", "");
 
@@ -78,8 +78,6 @@ public class Main {
 	public static int[] bracketsViaRecIn(String expression,
 			boolean firstItteration) {
 		// FIXME : one open at at the beginning - shows OK
-		// many open at the beginning - ArrayIndexOutOfBound
-		// one at the end - NullPointerException
 
 		int i;
 		if (firstItteration)
@@ -110,7 +108,7 @@ public class Main {
 			}
 			i++;
 		}
-		return null;
+		return new int[] { 0, expression.length()-1 };
 	}
 
 	public static Boolean compareBrackets(char openBracket, char closeBracket) {
@@ -122,8 +120,10 @@ public class Main {
 			}
 		};
 
-		return (brackets.get(String.valueOf(openBracket)).equals(String
-				.valueOf(closeBracket)));
+		if (brackets.keySet().contains(String.valueOf(openBracket)))
+			return (brackets.get(String.valueOf(openBracket)).equals(String.valueOf(closeBracket)));
+		else 
+			return false;
 
 	}
 }
