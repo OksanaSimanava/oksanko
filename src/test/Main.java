@@ -6,15 +6,18 @@ import java.util.Deque;
 import java.util.Hashtable;
 
 public class Main {
+	// public static boolean firstItteration = true;
 	public static void main(String[] args) {
 		String expression;
+
 		if (args.length > 0)
 			expression = args[0];
 		else
-			expression = "4+(97*[89+ 35+ 1+( )]+{8+6})]";
+			expression = " (4+(97*[89+ 35+ 1+( )]+{8+6})";
 
 		expression = expression.replaceAll(" ", "");
 
+		// FIXME could start with - +
 		String arrSymbols[] = new String[] { "+", "-", "/", "*" };
 		for (String x : arrSymbols) {
 			if (expression.startsWith(x) || expression.endsWith(x)) {
@@ -38,13 +41,11 @@ public class Main {
 			}
 		}
 
-		if (rec(expression)[0] == 0) {
+		if (bracketsViaRec(expression)[0] == 0) {
 			System.out.println("Expression is good!");
 		} else {
 			System.out.println("Expression is bad!");
 		}
-		
-
 	}
 
 	public static void bracketsViaDeque(String expression) {
@@ -70,26 +71,38 @@ public class Main {
 			System.out.println("Brackets are right");
 	}
 
-	public static int[] rec(String expression) {
-		//FIXME : one open at at the beginning - shows OK 
-		//        many open at the beginning - ArrayIndexOutOfBound
-		//        one at the end - NullPointerException
-		int i = 0;
+	public static int[] bracketsViaRec(String expression) {
+		return bracketsViaRecIn(expression, true);
+	}
+
+	public static int[] bracketsViaRecIn(String expression,
+			boolean firstItteration) {
+		// FIXME : one open at at the beginning - shows OK
+		// many open at the beginning - ArrayIndexOutOfBound
+		// one at the end - NullPointerException
+
+		int i;
+		if (firstItteration)
+			i = 0;
+		else
+			i = 1;
+
+		System.out.println(expression);
 
 		while (i < expression.length()) {
-			if (i != 0
-					&& Arrays.asList('(', '[', '{').contains(
-							expression.charAt(i))) {
-				int result[] = rec(expression.substring(i));
+			if (// i != 0 &&
+			Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
+				int result[] = bracketsViaRecIn(expression.substring(i), false);
 				if (result[0] == -1)
 					return new int[] { -1, i };
 				else
-					i += result[1]+1;
-					if (i >= expression.length()) break;
+					i += result[1] + 1;
+				if (i >= expression.length())
+					break;
 			}
-			
+
 			if (Arrays.asList(')', ']', '}').contains(expression.charAt(i))) {
-				System.out.println("let's match "+expression+" for comparing "+expression.charAt(0)+" and "+expression.charAt(i));
+				// System.out.println("let's match "+expression+" for comparing "+expression.charAt(0)+" and "+expression.charAt(i));
 				if (compareBrackets(expression.charAt(0), expression.charAt(i))) {
 					return new int[] { 0, i };
 				} else
@@ -97,14 +110,20 @@ public class Main {
 			}
 			i++;
 		}
-		return new int[] { 0 };
+		return null;
 	}
-	
-	public static Boolean compareBrackets(char openBracket,  char closeBracket) {
-		Hashtable<String, String> brackets = new Hashtable<String, String>()
-		{{ put("(", ")"); put("[", "]"); put("{", "}"); }};
-		
-		return (brackets.get(String.valueOf(openBracket)).equals(String.valueOf(closeBracket)));
+
+	public static Boolean compareBrackets(char openBracket, char closeBracket) {
+		Hashtable<String, String> brackets = new Hashtable<String, String>() {
+			{
+				put("(", ")");
+				put("[", "]");
+				put("{", "}");
+			}
+		};
+
+		return (brackets.get(String.valueOf(openBracket)).equals(String
+				.valueOf(closeBracket)));
 
 	}
 }
