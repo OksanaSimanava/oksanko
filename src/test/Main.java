@@ -13,7 +13,7 @@ public class Main {
 		if (args.length > 0)
 			expression = args[0];
 		else
-			expression = " [4+(97*[89+ 35+ 1+( )]+{8+6})";
+			expression = "4+(97*[89+( )]+{8+6})";
 
 		expression = expression.replaceAll(" ", "");
 
@@ -21,7 +21,8 @@ public class Main {
 		String wrongCloseSymbols[] = new String[] { "+", "-", "/", "*" };
 		for (String x : wrongOpenSymbols) {
 			if (expression.startsWith(x)) {
-				System.out.println("Expression starts with an irregular symbol");
+				System.out
+						.println("Expression starts with an irregular symbol");
 				return;
 			}
 		}
@@ -31,12 +32,11 @@ public class Main {
 				return;
 			}
 		}
-		
 
 		char[][] arrBrackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } };
 
 		// математические знаки после открывающей скобки
-		for (String symbol : wrongCloseSymbols  ) {
+		for (String symbol : wrongCloseSymbols) {
 			for (char[] brackets : arrBrackets) {
 				if (expression.contains(brackets[0] + symbol)
 						|| expression.contains(symbol + brackets[1])) {
@@ -47,7 +47,7 @@ public class Main {
 			}
 		}
 
-		if (bracketsViaRec(expression)[0] == 0) {
+		if (bracketsViaRec(expression)) {
 			System.out.println("Expression is good!");
 		} else {
 			System.out.println("Expression is bad!");
@@ -77,56 +77,52 @@ public class Main {
 			System.out.println("Brackets are right");
 	}
 
-	public static int[] bracketsViaRec(String expression) {
-		return bracketsViaRecIn(expression, true);
+	public static boolean bracketsViaRec(String expression) {
+		System.out.println(expression);
+		return (bracketsViaRecIn(expression)[0] == 0);
 	}
 
-	public static int[] bracketsViaRecIn(String expression,
-			boolean firstItteration) {
-		// FIXME : one open at at the beginning - shows OK
-
-		int i;
-		i = (firstItteration) ? 0 : 1;
-		System.out.println(expression);
-
+	public static int[] bracketsViaRecIn(String expression) {
+		int i=0;
+		char[] openBrackets = {'(', '[', '{'};
+		
 		while (i < expression.length()) {
-			if ( !(firstItteration && i==0) &&
-			Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
-				int result[] = bracketsViaRecIn(expression.substring(i), false);
-				if (result[0] == -1)
-					return new int[] { -1, i };
-				else
-					i += result[1] + 1;
-				if (i >= expression.length())
-					break;
-			}
-
 			if (Arrays.asList(')', ']', '}').contains(expression.charAt(i))) {
-				// System.out.println("let's match "+expression+" for comparing "+expression.charAt(0)+" and "+expression.charAt(i));
-				if (compareBrackets(expression.charAt(0), expression.charAt(i))) {
-					return new int[] { 0, i };
-				} else
-					return new int[] { -1, i };
+				return new int[] {i, Arrays.asList(')', ']', '}').indexOf(expression.charAt(i)) };
 			}
+			
+			if (Arrays.asList('(', '[', '{').contains(expression.charAt(i))) {
+				int result[] = bracketsViaRecIn(expression.substring(i+1));
+					if (result[0] == -1) {
+						return new int[] {-1, 0};
+					} else {
+						if (openBrackets[result[1]] == expression.charAt(i))
+							i += result[0] + 1;
+						else 
+							return new int[] {-1, 0};
+					}
+			}
+			
 			i++;
 		}
-		return new int[] { 0, expression.length() - 1 };
+		
+		return new int[] { 0, 0 };
 	}
 
-	public static Boolean compareBrackets(char openBracket, char closeBracket) {
-		Hashtable<String, String> brackets = new Hashtable<String, String>() {
-			{
-				put("(", ")");
-				put("[", "]");
-				put("{", "}");
-			}
-		};
-
-		if (brackets.keySet().contains(String.valueOf(openBracket)))
-			return (brackets.get(String.valueOf(openBracket)).equals(String
-					.valueOf(closeBracket)));
-		else
-			return false;
-
-	}
+//	public static Boolean compareBrackets(char openBracket, char closeBracket) {
+//		Hashtable<String, String> brackets = new Hashtable<String, String>() {
+//			{
+//				put("(", ")");
+//				put("[", "]");
+//				put("{", "}");
+//			}
+//		};
+//
+//		if (brackets.keySet().contains(String.valueOf(openBracket)))
+//			return (brackets.get(String.valueOf(openBracket)).equals(String
+//					.valueOf(closeBracket)));
+//		else
+//			return false;
+//
+//	}
 }
